@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\LoginController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +16,8 @@ use App\Http\Controllers\Controller;
 
 Route::get('/', function () {
     return view('index');
+    // $user = DB::table('userdemo')->get();
+    // dd($user);
 });
 Route::get('/cart', function () {
     return view('cart');
@@ -25,6 +28,7 @@ Route::get('login', function () {
 Route::get('signup', function () {
     return view('signup');
 });
+// Route::get('/admin', 'LoginController@index')->name('home');
 
 
 // Route::get('/demo', 'CustomersController@index')->name('home');
