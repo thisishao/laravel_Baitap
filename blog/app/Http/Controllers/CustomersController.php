@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CustomersController extends Controller
 {
@@ -13,10 +14,8 @@ class CustomersController extends Controller
      */
     public function index()
     {
-        $demo = "Day la trang index =))";
-        $abc = [1,2,3,4,5,6];
-        return view("demo", compact("demo", "abc"));
-
+        $data = DB::table('qlct')->get();
+        return view("quanlycauthu", compact("data"));
     }
 
     /**
@@ -27,7 +26,7 @@ class CustomersController extends Controller
     public function create()
     {
  
-        return view("add");
+        return view("themcauthu");
     }
 
     /**
@@ -39,13 +38,18 @@ class CustomersController extends Controller
     public function store(Request $request)
     {
         
-        echo "xu ly form";
         $getdata = $request->all();
-        // return view("show", compact("getdata"));
-       // var_dump($getdata);
-        dd($getdata);
+        // dd($getdata);
 
-
+        DB::table('qlct')->insert([
+            'name'      => $request->input('name'), 
+            'age'       => $request->input('age'),
+            'national'  => $request->input('national'),
+            'position'  => $request->input('position'),
+            'salary'    => $request->input('salary')
+        ]);
+        echo "Thêm cầu thủ thành công";
+        return redirect()->route('home');
     }
 
     /**
@@ -67,7 +71,9 @@ class CustomersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = DB::table('qlct')->where('id',$id)->get();
+        return view("suacauthu", compact("user"));
+        // dd($user);
     }
 
     /**
@@ -79,7 +85,17 @@ class CustomersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::table('qlct')
+              ->where('id', $id)
+              ->update([              
+                'name'      => $request->input('name'), 
+                'age'       => $request->input('age'),
+                'national'  => $request->input('national'),
+                'position'  => $request->input('position'),
+                'salary'    => $request->input('salary')
+            ]);
+        echo "<h2 style='color:red;'>Sửa cầu thủ thành công !!!<a href='/qlct'> Click</a> Vào đây để trở về trang chủ</h2>";
+        // return redirect()->route('home');
     }
 
     /**
@@ -90,6 +106,8 @@ class CustomersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('qlct')->where('id', $id)->delete();
+        
+        echo "<h2 style='color:red;'>Xoá cầu thủ thành công !!!<a href='/qlct'> Click</a> Vào đây để trở về trang chủ</h2>";
     }
 }

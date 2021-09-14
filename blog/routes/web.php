@@ -19,7 +19,7 @@ Route::get('/', function () {
     // $user = DB::table('userdemo')->get();
     // dd($user);
 });
-Route::get('/cart', function () {
+Route::get('cart', function () {
     return view('cart');
 });
 Route::get('login', function () {
@@ -28,8 +28,14 @@ Route::get('login', function () {
 Route::get('signup', function () {
     return view('signup');
 });
-// Route::get('/admin', 'LoginController@index')->name('home');
 
+
+Route::get('qlct', 'CustomersController@index')->name('home');
+Route::get('qlct/add', 'CustomersController@create')->name('qlct.add');
+Route::post('qlct/add', 'CustomersController@store')->name('qlct.insert');
+Route::get('qlct/edit/{id}', 'CustomersController@edit')->name('qlct.edit');
+Route::post('qlct/edit/{id}', 'CustomersController@update')->name('qlct.update');
+Route::get('qlct/delete/{id}', 'CustomersController@destroy')->name('qlct.delete');
 
 // Route::get('/demo', 'CustomersController@index')->name('home');
 // Route::get('/demo/add', 'CustomersController@create')->name('home');
@@ -37,3 +43,4 @@ Route::get('signup', function () {
 
 // Route::get('/demo/edit/{id}', 'CustomersController@edit')->name('edit');
 // Route::post('/demo/edit/{id}', 'CustomersController@update')->name('insert');
+
