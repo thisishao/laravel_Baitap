@@ -30,12 +30,12 @@ Route::get('signup', function () {
 });
 
 
-Route::get('qlct', 'CustomersController@index')->name('home');
-Route::get('qlct/add', 'CustomersController@create')->name('qlct.add');
-Route::post('qlct/add', 'CustomersController@store')->name('qlct.insert');
-Route::get('qlct/edit/{id}', 'CustomersController@edit')->name('qlct.edit');
-Route::post('qlct/edit/{id}', 'CustomersController@update')->name('qlct.update');
-Route::get('qlct/delete/{id}', 'CustomersController@destroy')->name('qlct.delete');
+Route::get('qlct', 'QuanlycauthuController@index')->name('home');
+Route::get('qlct/add', 'QuanlycauthuController@create')->name('qlct.add');
+Route::post('qlct/add', 'QuanlycauthuController@store')->name('qlct.insert');
+Route::get('qlct/edit/{id}', 'QuanlycauthuController@edit')->name('qlct.edit');
+Route::post('qlct/edit/{id}', 'QuanlycauthuController@update')->name('qlct.update');
+Route::get('qlct/delete/{id}', 'QuanlycauthuController@destroy')->name('qlct.delete');
 
 // Route::get('/demo', 'CustomersController@index')->name('home');
 // Route::get('/demo/add', 'CustomersController@create')->name('home');

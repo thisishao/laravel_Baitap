@@ -11,34 +11,32 @@
 		<div class="col-sm-12">
 			<h1 style="color:red; text-align: center;">Sửa cầu thủ</h1>
 			<form action="" method="POST">
-				@foreach ($user as $data)
 					<table class="table">
 					  	<tr>
 					  		<th scope="col">Name:</th>
-					  		<td><input type="text" class="form-control" name="name" value="{{$data->name}}"></td>
+					  		<td><input type="text" class="form-control" name="name" value="{{$user->name}}"></td>
 					  	</tr>
 					  	<tr>
 					  		<th scope="col">Age:</th>
-					  		<td><input type="text" class="form-control" value="{{$data->age}}" name="age"></td>
+					  		<td><input type="text" class="form-control" value="{{$user->age}}" name="age"></td>
 					  	</tr>
 					 	 <tr>
 					  		<th scope="col">National:</th>
-					  		<td><input type="text" class="form-control" value="{{$data->national}}" name="national"></td>
+					  		<td><input type="text" class="form-control" value="{{$user->national}}" name="national"></td>
 					  	</tr>
 					  	<tr>
 					  		<th scope="col">Position:</th>
-					  		<td><input type="text" class="form-control" value="{{$data->position}}" name="position"></td>
+					  		<td><input type="text" class="form-control" value="{{$user->position}}" name="position"></td>
 					  	</tr>
 					  	<tr>
 					  		<th scope="col">Salary:</th>
-					  		<td><input type="text" class="form-control" value="{{$data->salary}}" name="salary"></td>
+					  		<td><input type="text" class="form-control" value="{{$user->salary}}" name="salary"></td>
 					  	</tr>
 					  	<tr>
 					  		<td></td>
-					  		<td><a href="{{route('qlct.update', ['id' => $data->id])}}"><button class="btn btn-primary" type="submit">Sửa cầu thủ</button></a></td>
+					  		<td><a href="{{route('qlct.update', ['id' => $user->id])}}"><button class="btn btn-primary" type="submit">Sửa cầu thủ</button></a></td>
 					  	</tr>
 					</table>
-				@endforeach
 				@csrf	
 			</form>
 		</div>
