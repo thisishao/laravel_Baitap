@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Quanlycauthu;
+use Validator;
+use App\Http\Requests\QuanLyCauThuRequest;
 
 class QuanlycauthuController extends Controller
 {
@@ -34,8 +36,9 @@ class QuanlycauthuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuanLyCauThuRequest $request)
     {
+
         $getData = $request->all();
 
         $news = new Quanlycauthu;
@@ -80,7 +83,7 @@ class QuanlycauthuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(QuanLyCauThuRequest $request, $id)
     {
         $user = Quanlycauthu::find($id);
         $getData = $request->all();
@@ -109,4 +112,5 @@ class QuanlycauthuController extends Controller
 
         echo "<h2 style='color:red;'>Xoá cầu thủ thành công !!!<a href='/qlct'> Click</a> Vào đây để trở về trang chủ</h2>";
     }
+
 }

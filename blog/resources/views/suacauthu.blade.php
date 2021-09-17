@@ -10,6 +10,15 @@
 	<div class="container"> 
 		<div class="col-sm-12">
 			<h1 style="color:red; text-align: center;">Sửa cầu thủ</h1>
+			@if ($errors->any())
+			    <div class="alert alert-danger">
+			        <ul>
+			            @foreach ($errors->all() as $error)
+			                <li>{{ $error }}</li>
+			            @endforeach
+			        </ul>
+			    </div>
+			@endif
 			<form action="" method="POST">
 					<table class="table">
 					  	<tr>
