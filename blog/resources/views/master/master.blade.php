@@ -25,7 +25,6 @@
 </head>
 <body>
 	@include('master.header')
-    @include('master.error')
 
 	@yield('content')
 
