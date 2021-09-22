@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\LoginController;
+// use App\Http\Controllers\Admin\UsersController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,17 +31,12 @@ Route::get('signup', function () {
 });
 
 
-Route::get('qlct', 'QuanlycauthuController@index')->name('home');
-Route::get('qlct/add', 'QuanlycauthuController@create')->name('qlct.add');
-Route::post('qlct/add', 'QuanlycauthuController@store')->name('qlct.insert');
-Route::get('qlct/edit/{id}', 'QuanlycauthuController@edit')->name('qlct.edit');
-Route::post('qlct/edit/{id}', 'QuanlycauthuController@update')->name('qlct.update');
-Route::get('qlct/delete/{id}', 'QuanlycauthuController@destroy')->name('qlct.delete');
 
-// Route::get('/demo', 'CustomersController@index')->name('home');
-// Route::get('/demo/add', 'CustomersController@create')->name('home');
-// Route::post('/demo/add', 'CustomersController@store')->name('insert');
 
-// Route::get('/demo/edit/{id}', 'CustomersController@edit')->name('edit');
-// Route::post('/demo/edit/{id}', 'CustomersController@update')->name('insert');
 
+Auth::routes();
+
+Route::get('admin/home', 'HomeController@index')->name('admin.home');
+Route::get('admin/profile', 'Admin\UsersController@edit')->name('admin.profile');
+Route::get('admin/logout', 'HomeController@logout')->name('admin.logout');
+Route::get('admin/login', 'HomeController@logout')->name('admin.login');
