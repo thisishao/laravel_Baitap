@@ -36,7 +36,17 @@ Route::get('signup', function () {
 
 Auth::routes();
 
-Route::get('admin/home', 'HomeController@index')->name('admin.home');
-Route::get('admin/profile', 'Admin\UsersController@edit')->name('admin.profile');
-Route::get('admin/logout', 'HomeController@logout')->name('admin.logout');
-Route::get('admin/login', 'HomeController@logout')->name('admin.login');
+Route::group([
+    'namespace' => 'Admin',
+    'prefix'=>'admin'
+], 
+function(){
+    Route::get('dashboard', 'DashboardController@index')->name('admin.home');
+    Route::get('profile', 'UsersController@index')->name('admin.profile');
+    Route::post('profile', 'UsersController@update')->name('admin.profile');
+    Route::get('country', 'CountryController@index')->name('admin.country');
+    Route::get('addcountry', 'CountryController@create')->name('admin.createcountry');
+    Route::post('addcountry', 'CountryController@store')->name('admin.storecountry');
+    Route::get('deletecountry{id}', 'CountryController@destroy')->name('admin.destroycountry');
+});
+

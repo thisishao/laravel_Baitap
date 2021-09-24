@@ -4,12 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\admin\UsersModel;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Admin\UsersRequest;
 use App\Models\admin\CountryModel;
+use Illuminate\Support\Facades\Auth;
 
-class UsersController extends Controller
+class CountryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,11 +21,11 @@ class UsersController extends Controller
 
     public function index()
     {
-        $user = Auth::user();
         $country = CountryModel::all();
-
-        return view("admin/user/profile", compact('user','country'));
-        // dd(Auth::user());
+        $user = Auth::user();
+        $country = CountryModel::paginate(5);
+        return view("admin/country/country", compact('user','country'));
+        // dd($country);
     }
 
     /**
@@ -37,7 +35,8 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        return view("admin/country/AddCountry",compact('user'));
     }
 
     /**
@@ -48,7 +47,24 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,
+            [
+                'name' => 'required',
+            ],
+            [
+                'required' => ':attribute Không được để trống',
+            ],
+            [
+                'name' => 'Country',
+            ],
+        );
+
+        $data = $request->all();
+
+        $news = new CountryModel;
+            $news->name = $data['name'];
+            $news->save();
+        return redirect()->route('admin.country');
     }
 
     /**
@@ -59,7 +75,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**
@@ -68,9 +84,9 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-
+        //
     }
 
     /**
@@ -80,34 +96,9 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UsersRequest $request)
+    public function update(Request $request, $id)
     {
-        $userId = Auth::id();
-        $user = UsersModel::findOrFail($userId);
-
-        $data = $request->all();
-        // dd($data);
-        $file = $request->avatar;
-
-        if (!empty($file)) {
-            $data['avatar'] = $file->getClientOriginalName();
-        }
-
-        if ($data['password']) {
-            $data['password'] = bcrypt($data['password']);
-        }else{
-            $data['password'] = $user->password;
-        }
-
-
-        if ($user->update($data)) {
-            if (!empty($file)) {
-                $file->move('storage\user\avatar', $file->getClientOriginalName());
-            }
-            return redirect()->back()->with('success',__('Update profile success'));
-        }else{
-            return redirect()->back()->withErrors('Update profile errors');
-        }
+        //
     }
 
     /**
@@ -118,6 +109,9 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = CountryModel::find($id);
+        $user->delete();
+
+        return redirect()->route('admin.country');
     }
 }

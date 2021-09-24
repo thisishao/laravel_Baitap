@@ -13,7 +13,7 @@ class UsersRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,26 @@ class UsersRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'      => 'required|max:255',
+            // 'password'  => 'min:8',
+            'avatar'     => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'required'  => ':attribute Không được để trống',
+            'max'       => ':attribute Không được lớn hơn :max',
+            'min'       => ':attribute Không được nhỏ hơn :min',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'name'      => 'Tên',
+            'password'  => 'Mật khẩu',
+            'image'     =>  'Avatar',
         ];
     }
 }

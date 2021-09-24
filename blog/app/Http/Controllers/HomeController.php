@@ -26,18 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin/dashboard');
+        //
     }
 
-    public function profile()
-    {
-        return view('admin/user/profile');
-    }
 
-    public function logout(Request $request)
-    {
-        Auth::logout();
-
-        return view('auth/login');
-    }
 }
