@@ -16,27 +16,45 @@
                                 <span class="hide-menu">Profile</span>
                             </a>
                         </li>
-                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="form-basic.html" aria-expanded="false">
-                                <i class="mdi mdi-arrange-bring-forward"></i>
-                                <span class="hide-menu">Form Basic</span>
+                       <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
+                                <i class="mdi mdi-view-list"></i>
+                                <span class="hide-menu">List Users</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('admin.country')}}" aria-expanded="false">
-                                <i class="mdi mdi-border-none"></i>
+                                <i class="mdi mdi-city"></i>
                                 <span class="hide-menu">Country</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="icon-material.html" aria-expanded="false">
-                                <i class="mdi mdi-face"></i>
-                                <span class="hide-menu">Icon</span>
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
+                                <i class="mdi mdi-target"></i>
+                                <span class="hide-menu">Category</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
+                                <i class="mdi mdi-shopping"></i>
+                                <span class="hide-menu">Brand</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
+                                <i class="mdi mdi-cart"></i>
+                                <span class="hide-menu">List Product</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('admin.blog')}}" aria-expanded="false">
+                                <i class="mdi mdi-blogger"></i>
+                                <span class="hide-menu">Blog</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="starter-kit.html" aria-expanded="false">
-                                <i class="mdi mdi-file"></i>
+                                <i class="mdi mdi-clipboard-outline"></i>
                                 <span class="hide-menu">Blank</span>
                             </a>
                         </li>

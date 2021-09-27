@@ -13,7 +13,7 @@
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">
-                                        <a href="#">Home</a>
+                                        <a href="{{route('admin.home')}}">Home</a>
                                     </li>
                                     <li class="breadcrumb-item active" aria-current="page">Country</li>
                                 </ol>
@@ -49,7 +49,12 @@
                                             <tr>
                                                 <td>{{$data->id}}</td>
                                                 <td>{{$data->name}}</td>
-                                                <td><a href="{{route('admin.destroycountry', ['id' => $data->id])}}"> Delete</a></td>
+                                                <td>
+                                                    <a href="{{route('admin.destroycountry',['id' => $data->id])}}"> 
+                                                        <i class="mdi mdi-delete"></i>
+                                                        <span class="hide-menu">Delete</span>
+                                                    </a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

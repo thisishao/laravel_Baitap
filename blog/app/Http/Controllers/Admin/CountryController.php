@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\admin\CountryModel;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Admin\CountryRequest;
 
 class CountryController extends Controller
 {
@@ -36,7 +37,7 @@ class CountryController extends Controller
     public function create()
     {
         $user = Auth::user();
-        return view("admin/country/AddCountry",compact('user'));
+        return view("admin/country/add",compact('user'));
     }
 
     /**
@@ -45,19 +46,8 @@ class CountryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CountryRequest $request)
     {
-        $this->validate($request,
-            [
-                'name' => 'required',
-            ],
-            [
-                'required' => ':attribute Không được để trống',
-            ],
-            [
-                'name' => 'Country',
-            ],
-        );
 
         $data = $request->all();
 

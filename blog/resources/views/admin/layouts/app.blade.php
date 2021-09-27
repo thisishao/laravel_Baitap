@@ -9,7 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="admin/assets/images/favicon.png">
+    <link href="fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
+    <script defer src="fontawesome/js/all.js"></script> <!--load all styles -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('admin/assets/images/favicon.png')}}">
     <title>@yield('title')</title>
     <!-- Custom CSS -->
     <link href="{{ asset('admin/assets/libs/chartist/dist/chartist.min.css')}}" rel="stylesheet">

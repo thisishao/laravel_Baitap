@@ -124,10 +124,10 @@
                                     <div class="form-group">
                                         <label class="col-sm-12">Select Country</label>
                                         <div class="col-sm-12">
-                                            <select class="form-control form-control-line" name="country">
+                                            <select class="form-control form-control-line" name="country" autofocus>
                                                 @foreach($country as $va)
-                                                    <option value="{{$va->id}}">{{$va->name}}</option>
-                                                @endforeach
+                                                    <option value="{{$va->id}}" {{ $user->country == $va->id ? 'selected':'' }}> {{$va->name}}</option>
+                                                @endforeach 
                                             </select>
                                         </div>
                                     </div>
