@@ -15,22 +15,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-    // $user = DB::table('userdemo')->get();
-    // dd($user);
-});
-Route::get('cart', function () {
-    return view('cart');
-});
-Route::get('login', function () {
-    return view('login');
-});
-Route::get('signup', function () {
-    return view('signup');
-});
 
 
+Route::group([
+    'namespace' => 'frontend'
+], 
+function(){
+    Route::get('/blog', 'BlogController@index')->name('frontend.blog');
+    Route::get('/user/login', 'MemberController@index')->name('frontend.login');
+    Route::post('/user/login', 'MemberController@login')->name('frontend.login');
+
+    Route::get('/user/register', 'MemberController@create')->name('frontend.register');
+    Route::post('/user/register', 'MemberController@store')->name('frontend.register.store');
+
+    Route::get('/user/logout', 'MemberController@logout')->name('frontend.logout');
+});
 
 
 
