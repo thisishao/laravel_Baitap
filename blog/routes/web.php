@@ -22,6 +22,11 @@ Route::group([
 ], 
 function(){
     Route::get('/blog', 'BlogController@index')->name('frontend.blog');
+    Route::get('/blog/single/{id}','BlogController@single')->name('frontend.blogsingle');
+    Route::get('/blog/next/{id}','BlogController@next')->name('frontend.blognext');
+    Route::get('/blog/pre/{id}','BlogController@pre')->name('frontend.pre');
+    Route::post('/blog/rate', 'BlogController@rate')->name('frontend.blog.rate');
+
     Route::get('/user/login', 'MemberController@index')->name('frontend.login');
     Route::post('/user/login', 'MemberController@login')->name('frontend.login');
 
@@ -57,3 +62,11 @@ function(){
     Route::get('/blog/delete/{id}', 'BlogController@destroy')->name('admin.destroyblog');
 });
 
+Route::group([
+    'prefix'=>'api',
+    'namespace' => 'frontend',
+],
+function(){
+    Route::get('/blog/{id}', 'BlogController@demoApi')->name('frontend.blog.api');
+
+});
