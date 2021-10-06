@@ -170,7 +170,7 @@
 						<a href=""><img src="images/blog/socials.png" alt=""></a>
 					</div><!--/socials-share-->
 
-					<div class="media commnets">
+					<div class="media commnets" >
 						<a class="pull-left" href="#">
 							<img class="media-object" src="images/blog/man-one.jpg" alt="">
 						</a>
@@ -196,10 +196,8 @@
 									<img class="media-object" src="/images/blog/man-four.jpg" alt="">
 								</a>
 								@foreach($comment as $cm)
-								<div class="media-body" 
-								@if($cm->parent_id != null) 
-									style="margin-left:40px;" 
-								@endif > 
+								<div class="media-body" >
+
 									<ul class="sinlge-post-meta">
 										<li><i class="fa fa-user"></i>{{ $cm->user->name }}</li>
 										<li><i class="fa fa-clock-o"></i> 1:33 pm</li>
@@ -212,6 +210,23 @@
 										<i class="fa fa-reply"></i>  Replay
 									</a>
 								</div>
+								@foreach($cm->replies as $rep)
+								@if($cm->id === $rep->parent_id)
+								<div class="media-body" style="margin-left:40px;">
+									<ul class="sinlge-post-meta">
+										<li><i class="fa fa-user"></i>{{ $rep->user->name }}</li>
+										<li><i class="fa fa-clock-o"></i> 1:33 pm</li>
+										<li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
+
+									</ul>
+									<p>{{$rep->comment}}</p>
+									<a class="btn btn-primary demo" id="reply">									
+										<input type="hidden" id="comment_id" value="{{$cm->id}}">
+										<i class="fa fa-reply"></i>  Replay
+									</a>
+								</div>
+								@endif 
+								@endforeach
 								@endforeach
 							</li>
 						</ul>					

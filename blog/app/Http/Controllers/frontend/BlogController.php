@@ -110,7 +110,11 @@ class BlogController extends Controller
         }
         ///get comment blog
 
-        $comment = CommentModel::where('blog_id','=',$id)->get();
+        $comment = CommentModel::where([
+            ['blog_id','=',$id],
+            ['parent_id','=',null],
+        ])->get();
+        // $comment = CommentModel::where('blog_id','=',$id)->get();
         $countCm = CommentModel::where('blog_id','=',$id)->count();
 
         // var_dump($demo);
