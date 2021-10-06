@@ -26,15 +26,20 @@
 	        );
 			var getBlog_id = $("#blog_id").val();
 			var getUser_id = $("#user_id").val();
+			// console.log(getUser_id);
 
 			$('.ratings_stars').click(function(){
 				var Values =  $(this).find("input").val();
 
-
+				// $('#formRate').submit();
 				if (getUser_id == undefined) {
-					alert("Vui lòng đă nhập để đánh giá !!!")
-				}else{
+					var dn = confirm("Vui lòng đă nhập để đánh giá !!!")
+					// alert
+					if (dn == true) {
+						location.replace("http://localhost:8000/user/login");
+					}
 
+				}else{
 					$.ajax({
 			        method: "POST",
 			        url: "{{route('frontend.blog.rate')}}",
@@ -61,6 +66,38 @@
 		        }
 
 		    });
+
+			// truyền id comment cho replay
+
+			$('.btn.btn-primary.demo').click(function(){
+
+				var getIdCommnet =  $(this).find("input").val();
+				// console.log(getIdCommnet);
+
+				$("input#parent_id").val(getIdCommnet);
+
+			});
+
+			// check đăng nhập form comment
+			$('#comment').submit(function(e){
+				if (getUser_id == undefined) {
+
+					var dn = confirm("Vui lòng đă nhập để comment !!!")
+					if (dn == true) {
+						location.replace("http://localhost:8000/user/login");
+					}
+					e.preventDefault();
+				}else{
+					$('#comment').submit();
+				}
+			})
+
+			// var tb = $("span.rate-np").text();
+			// var chek = $('.ratings_stars').find('input').val('tb');
+			// console.log(chek)
+			// console.log($("input").val(Number(tb)));
+			// $("input").val(tb);
+
 		});
     </script>
 @endsection('js.head')
@@ -152,50 +189,30 @@
 						</div>
 					</div><!--Comments-->
 					<div class="response-area">
-						<h2>3 RESPONSES</h2>
+						<h2>{{$countCm}} RESPONSES</h2>
 						<ul class="media-list">
 							<li class="media">
-								
 								<a class="pull-left" href="#">
-									<img class="media-object" src="images/blog/man-two.jpg" alt="">
+									<img class="media-object" src="/images/blog/man-four.jpg" alt="">
 								</a>
-								<div class="media-body">
+								@foreach($comment as $cm)
+								<div class="media-body" 
+								@if($cm->parent_id != null) 
+									style="margin-left:40px;" 
+								@endif > 
 									<ul class="sinlge-post-meta">
-										<li><i class="fa fa-user"></i>Janis Gallagher</li>
+										<li><i class="fa fa-user"></i>{{ $cm->user->name }}</li>
 										<li><i class="fa fa-clock-o"></i> 1:33 pm</li>
 										<li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
+
 									</ul>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-									<a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
+									<p>{{$cm->comment}}</p>
+									<a class="btn btn-primary demo" id="reply">									
+										<input type="hidden" id="comment_id" value="{{$cm->id}}">
+										<i class="fa fa-reply"></i>  Replay
+									</a>
 								</div>
-							</li>
-							<li class="media second-media">
-								<a class="pull-left" href="#">
-									<img class="media-object" src="images/blog/man-three.jpg" alt="">
-								</a>
-								<div class="media-body">
-									<ul class="sinlge-post-meta">
-										<li><i class="fa fa-user"></i>Janis Gallagher</li>
-										<li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-										<li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-									</ul>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-									<a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
-								</div>
-							</li>
-							<li class="media">
-								<a class="pull-left" href="#">
-									<img class="media-object" src="images/blog/man-four.jpg" alt="">
-								</a>
-								<div class="media-body">
-									<ul class="sinlge-post-meta">
-										<li><i class="fa fa-user"></i>Janis Gallagher</li>
-										<li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-										<li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-									</ul>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-									<a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
-								</div>
+								@endforeach
 							</li>
 						</ul>					
 					</div><!--/Response-area-->
@@ -203,48 +220,41 @@
 						<div class="row">
 							<div class="col-sm-4">
 								<h2>Leave a replay</h2>
-								<form>
-									<div class="blank-arrow">
-										<label>Your Name</label>
-									</div>
-									<span>*</span>
-									<input type="text" placeholder="write your name...">
-									<div class="blank-arrow">
-										<label>Email Address</label>
-									</div>
-									<span>*</span>
-									<input type="email" placeholder="your email address...">
-									<div class="blank-arrow">
-										<label>Web Site</label>
-									</div>
-									<input type="email" placeholder="current city...">
-								</form>
 							</div>
-							<div class="col-sm-8">
-								<div class="text-area">
-									<div class="blank-arrow">
-										<label>Your Name</label>
+							<form method="POST" action="{{route('frontend.blog.comment')}}" id="comment">
+								<div class="col-sm-12">
+									<div class="">
+										<div class="blank-arrow">
+											<label>@auth {{auth()->user()->name}} 
+												<input type="hidden" value="{{auth()->user()->id}}" name="user_id" id="user_id_cm"> 
+												@else Your Name @endauth
+											</label>
+										</div>
+										<span>*</span>
+										<input type="hidden" id="parent_id" name="parent_id" value="">
+										<input type="hidden" name="blog_id" value="{{$blog->id}}">
+										<textarea name="comment" rows="5"></textarea>
+										<button type="submit" class="btn btn-primary comment">Post comment</button>
 									</div>
-									<span>*</span>
-									<textarea name="message" rows="11"></textarea>
-									<a class="btn btn-primary" href="">post comment</a>
 								</div>
-							</div>
+								@csrf	
+							</form>
 						</div>
 					</div><!--/Repaly Box-->
 				</div>	
 				<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 				<script>
-					load_data();
-					function load_data() {
-						$.get("http://localhost:8000/api/blog/13", function(res){
-					    console.log(res)
-					    // res.forEach(function(item){
-					    // 	console.log(item);
-					    // })
-					  });
 
-						
-					}
+					// load_data();
+					// function load_data() {
+					// 	$.get("http://localhost:8000/api/blog/", function(res){
+					//     console.log(res)
+					//     res.forEach(function(item){
+					//     	console.log(item);
+					//     })
+					//   });
+	
+					// }
+
 				</script>
 			@endsection('content')

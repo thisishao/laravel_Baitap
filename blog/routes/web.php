@@ -26,6 +26,7 @@ function(){
     Route::get('/blog/next/{id}','BlogController@next')->name('frontend.blognext');
     Route::get('/blog/pre/{id}','BlogController@pre')->name('frontend.pre');
     Route::post('/blog/rate', 'BlogController@rate')->name('frontend.blog.rate');
+    Route::post('/blog/comment','BlogController@comment')->name('frontend.blog.comment');
 
     Route::get('/user/login', 'MemberController@index')->name('frontend.login');
     Route::post('/user/login', 'MemberController@login')->name('frontend.login');

@@ -4,9 +4,11 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\admin\BlogModel;
+use App\Models\frontend\BlogModel;
 use Illuminate\Support\Facades\Auth;
 use App\Models\frontend\rateModels;
+use App\Models\frontend\CommentModel;
+use Illuminate\Support\Facades\DB;
 
 class BlogController extends Controller
 {
@@ -106,25 +108,31 @@ class BlogController extends Controller
             $tb = 0;
             $countBlog = 0;
         }
+        ///get comment blog
 
-        // dd($rateBlog);
-        return view('frontend.blog.blog-single',compact('blog','tb','countBlog'));
+        $comment = CommentModel::where('blog_id','=',$id)->get();
+        $countCm = CommentModel::where('blog_id','=',$id)->count();
+
+        // var_dump($demo);
+        return view('frontend.blog.blog-single',compact('blog','tb','countBlog','comment', 'countCm'));
     }
 
     public function next($id)
     {
         $blognext = BlogModel::where('id','>',$id)->limit(1)->get();
 
+        // $blognext = BlogModel::latest()->first();
+
         $blogs = [];
         foreach ($blognext as $va) {
             $blogs['id'] =  $va['id'] ;
         }
         $blog = BlogModel::find($blogs['id']);
+
         return view('frontend.blog.blog-single',compact('blog'));
 
         // SELECT * FROM `blog` WHERE id=(SELECT MAX(id) FROM `blog`
         // max row
-
 
     }
 
@@ -164,6 +172,20 @@ class BlogController extends Controller
         $news->user_id = $request->user_id;
         $news->save();
         
+
+    }
+
+    public function comment(Request $request)
+    {
+        // dd($request->all());
+
+        $comment = new CommentModel();
+        $comment->user_id   = $request->user_id;
+        $comment->blog_id   = $request->blog_id;
+        $comment->parent_id = $request->parent_id;
+        $comment->comment   = $request->comment;
+        $comment->save();
+        return back();
 
     }
 
