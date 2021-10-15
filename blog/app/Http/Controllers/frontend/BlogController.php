@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\frontend\rateModels;
 use App\Models\frontend\CommentModel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class BlogController extends Controller
 {
@@ -19,82 +20,22 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blog = BlogModel::all();
+        // $blog = BlogModel::all();
         $blog = BlogModel::paginate(3);
         return view('frontend.blog.blog', compact('blog'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 
     public function single($id)
     {
         $rate = 0;
         $blog = BlogModel::find($id);
-        // return $blog;
+
+        $previous = BlogModel::where('id', '<', $blog->id)->max('id');
+        $next = BlogModel::where('id', '>', $blog->id)->min('id');
+
+        //phần đánh giá blog
         $rateBlog = rateModels::where('blog_id','=',$id)->get();
         $countBlog = rateModels::where('blog_id','=',$id)->count();
 
@@ -103,9 +44,9 @@ class BlogController extends Controller
         }
 
         if ($countBlog > 0) {
-            $tb = round($rate/$countBlog);
+            $tbRate = round($rate/$countBlog);
         }else{
-            $tb = 0;
+            $tbRate = 0;
             $countBlog = 0;
         }
         ///get comment blog
@@ -114,48 +55,21 @@ class BlogController extends Controller
             ['blog_id','=',$id],
             ['parent_id','=',null],
         ])->get();
-        // $comment = CommentModel::where('blog_id','=',$id)->get();
+
         $countCm = CommentModel::where('blog_id','=',$id)->count();
 
-        // var_dump($demo);
-        return view('frontend.blog.blog-single',compact('blog','tb','countBlog','comment', 'countCm'));
+
+
+        return View::make('frontend.blog.blog-single')
+                        ->with('previous', $previous)
+                        ->with('next', $next)
+                        ->with('blog', $blog)
+                        ->with('tbRate', $tbRate)
+                        ->with('countBlog', $countBlog)
+                        ->with('comment', $comment)
+                        ->with('countCm', $countCm);
     }
 
-    public function next($id)
-    {
-        $blognext = BlogModel::where('id','>',$id)->limit(1)->get();
-
-        // $blognext = BlogModel::latest()->first();
-
-        $blogs = [];
-        foreach ($blognext as $va) {
-            $blogs['id'] =  $va['id'] ;
-        }
-        $blog = BlogModel::find($blogs['id']);
-
-        return view('frontend.blog.blog-single',compact('blog'));
-
-        // SELECT * FROM `blog` WHERE id=(SELECT MAX(id) FROM `blog`
-        // max row
-
-    }
-
-    public function pre($id)
-    {
-        $blognext = BlogModel::where('id','<',$id)->orderByDesc('id')->limit(1)->get();
-
-        $blogs = [];
-        foreach ($blognext as $va) {
-            $blogs['id'] =  $va['id'] ;
-        }
-
-        $blog = BlogModel::find($blogs['id']);
-
-        return view('frontend.blog.blog-single',compact('blog'));
-        return redirect()->route('frontend.blog.blog-single');
-
-        // SELECT * FROM `blog` WHERE id=(SELECT MIN(id) FROM `blog`)
-    }
 
     public function demoApi($id)
     {
@@ -166,6 +80,7 @@ class BlogController extends Controller
 
         // return $blog;
     }
+
     public function rate(Request $request)
     {
         // dd($request->all());
@@ -173,7 +88,7 @@ class BlogController extends Controller
         $news = new rateModels();
         $news->rate = $request->rate;
         $news->blog_id= $request->blog_id;
-        $news->user_id = $request->user_id;
+        $news->user_id = Auth::id();
         $news->save();
         
 
@@ -183,13 +98,19 @@ class BlogController extends Controller
     {
         // dd($request->all());
 
-        $comment = new CommentModel();
-        $comment->user_id   = $request->user_id;
-        $comment->blog_id   = $request->blog_id;
-        $comment->parent_id = $request->parent_id;
-        $comment->comment   = $request->comment;
-        $comment->save();
-        return back();
+        if (Auth::check()) {
+            $comment = new CommentModel();
+            $comment->user_id   = Auth::id();
+            $comment->blog_id   = $request->blog_id;
+            $comment->parent_id = $request->parent_id;
+            $comment->comment   = $request->comment;
+            $comment->save();
+
+            return back();
+        }else{
+            
+            return redirect()->back()->withErrors('Vui lòng đăng nhập để comment');
+        }
 
     }
 

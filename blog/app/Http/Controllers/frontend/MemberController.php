@@ -5,9 +5,11 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\frontend\MemberRequest;
+use App\Models\admin\CountryModel;
 use App\Models\frontend\MemberModel;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\frontend\MemberLoginRequest;
+use App\Http\Requests\frontend\MemberUpdateRequest;
 
 class MemberController extends Controller
 {
@@ -16,6 +18,11 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
     public function index()
     {
         return view('frontend.member.login');
@@ -73,9 +80,11 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        $user = Auth::user();
+        $country = CountryModel::all();
+        return view('frontend.member.account', compact('user','country'));
     }
 
     /**
@@ -85,9 +94,32 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MemberUpdateRequest $request)
     {
-        //
+        // dd($request->all());
+        $data = $request->all();
+        $user = MemberModel::findOrFail(Auth::id());
+
+        $file = $request->avatar;
+
+        if (!empty($file)) {
+            $data['avatar'] = $file->getClientOriginalName();
+        }
+
+        if ($data['password']) {
+            $data['password'] = bcrypt($data['password']);
+        }else{
+            $data['password'] = $user->password;
+        }
+
+        if ($user->update($data)) {
+            if (!empty($file)) {
+                $file->move('storage\user\avatar', $file->getClientOriginalName());
+            }
+            return redirect()->back()->with('success',__('Update profile success'));
+        }else{
+            return redirect()->back()->withErrors('Update profile errors');
+        }
     }
 
     /**

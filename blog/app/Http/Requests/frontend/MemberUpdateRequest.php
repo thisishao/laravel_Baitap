@@ -4,7 +4,7 @@ namespace App\Http\Requests\frontend;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MemberRequest extends FormRequest
+class MemberUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,12 @@ class MemberRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => 'required|max:255',
-            'email'     => 'required|email:rfc,dns',
-            'password'  => 'required|min:8',
+            'name'      =>  'required|max:255',
+            'email'     =>  'required|email:rfc,dns',
+            'address'   =>  'required|max:255',
+            'country'   =>  'required',
+            'phone'     =>  'required',
+            'avatar'     => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 
@@ -45,6 +48,10 @@ class MemberRequest extends FormRequest
             'name'      => 'Tên',
             'email'     => 'Email',
             'password'  => 'Mật khẩu',
+            'address'   =>  'Địa chỉ',
+            'country'   =>  'Quốc gia',
+            'phone'     =>  'Số điện thoại',
+            'avatar'    =>  'Avatar',
         ];
     }
 }

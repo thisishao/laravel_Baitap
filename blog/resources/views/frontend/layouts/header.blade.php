@@ -60,9 +60,9 @@
 					<div class="col-md-8 clearfix">
 						<div class="shop-menu clearfix pull-right">
 							<ul class="nav navbar-nav">
-								@auth
-								<li><a href=""><i class="fa fa-user"></i> Account</a></li>
-								@endauth
+								@if(Auth()->check())
+								<li><a href="{{route('frontend.account')}}"><i class="fa fa-user"></i> Account</a></li>
+								@endif
 								<li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
 								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>

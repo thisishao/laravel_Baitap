@@ -9,101 +9,9 @@
         }
     </script>
 
-    <script>
-    	
-    	$(document).ready(function(){
-			//vote
-			$('.ratings_stars').hover(
-	            // Handles the mouseover
-	            function() {
-	                $(this).prevAll().andSelf().addClass('ratings_hover');
-	                // $(this).nextAll().removeClass('ratings_vote'); 
-	            },
-	            function() {
-	                $(this).prevAll().andSelf().removeClass('ratings_hover');
-	                // set_votes($(this).parent());
-	            }
-	        );
-			var getBlog_id = $("#blog_id").val();
-			var getUser_id = $("#user_id").val();
-			// console.log(getUser_id);
-
-			$('.ratings_stars').click(function(){
-				var Values =  $(this).find("input").val();
-
-				// $('#formRate').submit();
-				if (getUser_id == undefined) {
-					var dn = confirm("Vui lòng đă nhập để đánh giá !!!")
-					// alert
-					if (dn == true) {
-						location.replace("http://localhost:8000/user/login");
-					}
-
-				}else{
-					$.ajax({
-			        method: "POST",
-			        url: "{{route('frontend.blog.rate')}}",
-			        data: {
-			            rate: Values,
-			            blog_id: getBlog_id,
-			            user_id: getUser_id,
-			  			_token: '{{csrf_token()}}'
-			        },
-			        success : function(response){
-			          console.log(response);
-			        }
-			      });
-				}
-
-		        
-		    	if ($(this).hasClass('ratings_over')) {
-		            $('.ratings_stars').removeClass('ratings_over');
-		            $(this).prevAll().andSelf().addClass('ratings_over');
-		            // $(this).nextAll().removeClass('ratings_vote'); 
-		        }else {
-		        	$(this).prevAll().andSelf().addClass('ratings_over');
-		        	// set_votes($(this).parent());
-		        }
-
-		    });
-
-			// truyền id comment cho replay
-
-			$('.btn.btn-primary.demo').click(function(){
-
-				var getIdCommnet =  $(this).find("input").val();
-				// console.log(getIdCommnet);
-
-				$("input#parent_id").val(getIdCommnet);
-
-			});
-
-			// check đăng nhập form comment
-			$('#comment').submit(function(e){
-				if (getUser_id == undefined) {
-
-					var dn = confirm("Vui lòng đă nhập để comment !!!")
-					if (dn == true) {
-						location.replace("http://localhost:8000/user/login");
-					}
-					e.preventDefault();
-				}else{
-					$('#comment').submit();
-				}
-			})
-
-			// var tb = $("span.rate-np").text();
-			// var chek = $('.ratings_stars').find('input').val('tb');
-			// console.log(chek)
-			// console.log($("input").val(Number(tb)));
-			// $("input").val(tb);
-
-		});
-    </script>
 @endsection('js.head')
 @section('content')
 
-		
 				<div class="col-sm-9">
 					<div class="blog-post-area">
 						<h2 class="title text-center">Latest From our Blog</h2>
@@ -129,8 +37,12 @@
 							{!!$blog->content!!}
 							<div class="pager-area">
 								<ul class="pager pull-right">
-									<li><a href="{{route('frontend.pre',['id'=> $blog->id])}}">Pre</a></li>
-									<li><a href="{{route('frontend.blognext',['id' => $blog->id] )}}" onclick="nextPage()">Next</a></li>
+									@if($previous)
+									<li><a href="{{$previous}}">Pre</a></li>
+									@endif
+									@if($next)
+									<li><a href="{{$next}}">Next</a></li>
+									@endif
 								</ul>
 							</div>
 						</div>
@@ -148,10 +60,10 @@
 					                    <div class="star_5 ratings_stars"><input value="5" type="hidden"></div>
 					                    <div class="ratings_stars" style="display: none;"><input class="rate" type="text" name="rate" value=""></div>
 					                    <div class="ratings_stars" style="display: none;"><input id="blog_id" type="text" name="blog_id" value="{{$blog->id}}"></div>
-					                    @auth
-					                    <div class="ratings_stars" style="display: none;"><input id="user_id" type="text" name="user_id" value="{{auth()->user()->id}}"></div>
-					                    @endauth
-					                    <span class="rate-np">{{$tb}}</span>
+					                    @if(auth()->check())
+					                    <div class="ratings_stars" style="display: none;"><input id="user_id" type="text" value="demo"></div>
+					                    @endif
+					                    <span class="rate-np">{{$tbRate}}</span>
 					                </div> 
 					            </div>
 					            @csrf
@@ -236,12 +148,22 @@
 							<div class="col-sm-4">
 								<h2>Leave a replay</h2>
 							</div>
+							<div class="col-sm-12">
+								@if ($errors->any())
+		                            <div class="alert alert-danger">
+		                                <ul>
+		                                    @foreach ($errors->all() as $error)
+		                                       <li>{{ $error }}</li>
+		                                    @endforeach
+		                                </ul>
+		                            </div>
+		                        @endif
+							</div>
 							<form method="POST" action="{{route('frontend.blog.comment')}}" id="comment">
 								<div class="col-sm-12">
 									<div class="">
 										<div class="blank-arrow">
 											<label>@auth {{auth()->user()->name}} 
-												<input type="hidden" value="{{auth()->user()->id}}" name="user_id" id="user_id_cm"> 
 												@else Your Name @endauth
 											</label>
 										</div>
@@ -270,6 +192,97 @@
 					//   });
 	
 					// }
+
+				$(document).ready(function(){
+					//vote
+					$('.ratings_stars').hover(
+			            // Handles the mouseover
+			            function() {
+			                $(this).prevAll().andSelf().addClass('ratings_hover');
+			                // $(this).nextAll().removeClass('ratings_vote'); 
+			            },
+			            function() {
+			                $(this).prevAll().andSelf().removeClass('ratings_hover');
+			                // set_votes($(this).parent());
+			            }
+			        );
+					var getBlog_id = $("#blog_id").val();
+					var getUser_id = $("#user_id").val();
+
+					console.log(getUser_id);
+
+					$('.ratings_stars').click(function(){
+						var Values =  $(this).find("input").val();
+
+						// $('#formRate').submit();
+						if (getUser_id == undefined) {
+							var dn = confirm("Vui lòng đă nhập để đánh giá !!!")
+							if (dn == true) {
+								location.replace("http://localhost:8000/user/login");
+							}
+
+						}else{
+							$.ajax({
+					        method: "POST",
+					        url: "{{route('frontend.blog.rate')}}",
+					        data: {
+					            rate: Values,
+					            blog_id: getBlog_id,
+					            user_id: getUser_id,
+					  			_token: '{{csrf_token()}}'
+					        },
+					        success : function(response){
+					          console.log(response);
+					        }
+					      });
+						}
+
+				        
+				    	if ($(this).hasClass('ratings_over')) {
+				            $('.ratings_stars').removeClass('ratings_over');
+				            $(this).prevAll().andSelf().addClass('ratings_over');
+				            // $(this).nextAll().removeClass('ratings_vote'); 
+				        }else {
+				        	$(this).prevAll().andSelf().addClass('ratings_over');
+				        	// set_votes($(this).parent());
+				        }
+
+				    });
+
+					// truyền id comment cho replay
+
+					$('.btn.btn-primary.demo').click(function(){
+
+						var getIdCommnet =  $(this).find("input").val();
+						// console.log(getIdCommnet);
+
+						$("input#parent_id").val(getIdCommnet);
+
+					});
+
+					// check đăng nhập form comment
+					$('#comment').submit(function(e){
+						if (getUser_id == undefined) {
+
+							var dn = confirm("Vui lòng đă nhập để comment !!!")
+							if (dn == true) {
+								location.replace("http://localhost:8000/user/login");
+							}
+							e.preventDefault();
+						}else{
+							$('#comment').submit();
+						}
+					})
+
+
+					// var tb = $("span.rate-np").text();
+					// var chek = $('.ratings_stars').find('input').val('tb');
+					// console.log(chek)
+					// console.log($("input").val(Number(tb)));
+					// $("input").val(tb);
+
+				});
+
 
 				</script>
 			@endsection('content')
