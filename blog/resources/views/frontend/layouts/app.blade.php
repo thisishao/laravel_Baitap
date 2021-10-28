@@ -35,7 +35,6 @@
         <div class="container">
             <div class="row">
                 @include('frontend.layouts.menu-left')
-
                 <!-- ================== -->
                 <div class="col-sm-9 padding-right">
                     @yield('content')
@@ -47,3 +46,20 @@
 	@include('frontend.layouts.footer')
 </body>
 </html>
+@yield('js')
+<script type="text/javascript">
+    $(document).ready(function(){
+        let getUrl = window.location.pathname;
+
+        if (getUrl == "/cart") {
+            $("#menu-left").hide();
+            $("#slider").hide();
+        }
+        // console.log(getUrl);
+
+
+
+
+
+    });
+</script>

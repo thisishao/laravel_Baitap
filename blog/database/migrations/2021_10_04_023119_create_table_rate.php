@@ -19,6 +19,8 @@ class CreateTableRate extends Migration
             $table->bigInteger('blog_id')->unsigned();
             $table->bigInteger('users_id')->unsigned();
             $table->timestamps();
+            $table->foreign('blog_id')->references('id')->on('blog');
+            $table->foreign('users_id')->references('id')->on('users');
         });
     }
 

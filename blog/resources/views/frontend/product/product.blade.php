@@ -72,18 +72,23 @@
 									<td>Price</td>
 									<td>Action</td>
 								</tr>
-								@foreach($product as $pro)
-									<tr>
-										<td>{{$pro->id}}</td>
-										<td>{{$pro->name}}</td>
-										<td>xxx</td>
-										<td>{{$pro->price}}</td>
-										<td>
-											<a href="{{route('frontend.product.edit',['id'=>$pro->id])}}">Edit</a> |
-											<a href="{{route('frontend.product.destroy',['id'=>$pro->id])}}">Delete</a>
-										</td>
-									</tr>
-								@endforeach	
+								@if(count($product) == 0)
+									<h2 style="color:red;">Bạn không có sản phẩm nào cả vui lòng thêm sản phẩm</h2>
+								@else
+									@foreach($product as $pro)
+									<?php $getIm = json_decode($pro['image'], true); ?>
+										<tr>
+											<td>{{$pro->id}}</td>
+											<td>{{$pro->name}}</td>
+											<td><img src="{{asset('/upload/product/'.$pro->user_id.'/hinhnho_'.reset($getIm))}}"></td>
+											<td>{{$pro->price}}</td>
+											<td>
+												<a href="{{route('frontend.product.edit',['id'=>$pro->id])}}">Edit</a> |
+												<a href="{{route('frontend.product.destroy',['id'=>$pro->id])}}">Delete</a>
+											</td>
+										</tr>
+									@endforeach	
+								@endif
 							</table>
 						<a href="{{route('frontend.product.create')}}" class="btn btn-primary" >Add New</a>
 					</div><!--/sign up form-->

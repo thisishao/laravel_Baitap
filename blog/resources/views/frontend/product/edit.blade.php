@@ -89,6 +89,11 @@
 									<option value="0">New</option>
 									<option value="1" {{$getProducts['new'] == 1 ? 'selected':''}} >Sale</option>
 								</select>
+								@if($getProducts['sale'])
+								<div id="hh" style="width: 100px;">
+									<input type="text" name="sale" value="{{$getProducts['sale']}}">
+								</div>
+								@endif
 								<div id="sale" style="width: 100px;">
 									<input type="text" name="sale" >
 								</div>
@@ -98,7 +103,7 @@
 									<!-- <label style="float: left;">Vui lòng chọn hình ảnh để xoá:</label> -->
 								@foreach($getArrImage as $img)
 									<div class="col-sm-3"> 
-										<img src="{{asset('/upload/product/'.$img)}}" width="70" >
+										<img src="{{asset('/upload/product/'.Auth::id().'/'.$img)}}" width="70" >
 										<input type="checkbox" name="demo[]" value="{{$img}}" style="width: 70px;">
 									</div>
 								@endforeach
@@ -118,9 +123,11 @@
                  var value = obj.value;
                  if (value == 1) {
                  	$('#sale').show();
+                 	// $('#hh').show();
                  }
                  else if (value == 0) {
                  	$("#sale").hide();
+                 	$('#hh').hide();
                  }
             }
 		</script>

@@ -1,4 +1,4 @@
-				<div class="col-sm-3">
+				<div class="col-sm-3" id="menu-left">
 					<div class="left-sidebar">
 						<h2>Category</h2>
 						<div class="panel-group category-products" id="accordian"><!--category-productsr-->

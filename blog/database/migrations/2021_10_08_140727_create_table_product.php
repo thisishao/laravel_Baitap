@@ -20,7 +20,7 @@ class CreateTableProduct extends Migration
             $table->bigInteger('category_id');
             $table->bigInteger('brand_id');
             $table->integer('new');
-            $table->integer('sale');
+            $table->integer('sale')->nullable();
             $table->string('company');
             $table->string('image');
             $table->string('detail');

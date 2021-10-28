@@ -41,6 +41,11 @@ function(){
     Route::get('/product/edit/{id}', 'ProductController@edit')->name('frontend.product.edit');
     Route::post('/product/edit/{id}', 'ProductController@update')->name('frontend.product.update');
     Route::get('/product/destroy/{id}', 'ProductController@destroy')->name('frontend.product.destroy');
+    Route::get('/product-{id}-{slug}', 'ProductController@details')->name('frontend.product.details');
+
+    Route::post('/product', 'CartController@store')->name('frontend.product.addtocart');
+    Route::get('/cart', 'CartController@show')->name('frontend.cart');
+    Route::post('/cart', 'CartController@update')->name('frontend.cart.update');
 
     Route::get('/', 'HomeController@index')->name('home');
 
