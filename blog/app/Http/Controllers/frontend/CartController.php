@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\frontend\ProductModel;
+use Mail;
 
 class CartController extends Controller
 {
@@ -28,7 +29,6 @@ class CartController extends Controller
             "qty" => 1,
         );
 
-        // print_r($cart[$id]);
 
         if (isset($cart[$id])) {
             $qty = $cart[$id]["qty"];
@@ -39,7 +39,7 @@ class CartController extends Controller
         }
 
         Session(['cart' => $cart]);
-        // $request->session()->flush();
+
         // print_r($cart);
     }
 
@@ -62,8 +62,6 @@ class CartController extends Controller
             $qty = $cart[$id]["qty"];
             $qty = $qty + 1;
             $cart[$id]["qty"] = $qty;
-
-            // print_r($cart);
         };
 
         if ($request->tru) {
@@ -87,5 +85,6 @@ class CartController extends Controller
 
         Session(['cart' => $cart]);
     }
+
 
 }
