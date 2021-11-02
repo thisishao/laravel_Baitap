@@ -51,7 +51,7 @@
     $(document).ready(function(){
         let getUrl = window.location.pathname;
 
-        if (getUrl == "/cart" || getUrl == "/order-succes") {
+        if (getUrl == "/cart" || getUrl == "/order-succes" || getUrl == "/order") {
             $("#menu-left").hide();
             $("#slider").hide();
         }

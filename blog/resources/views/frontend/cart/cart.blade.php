@@ -139,7 +139,7 @@
 							<li>Total <span id="tong">{{$total}}</span><span>$</span></li>
 						</ul>
 							<a class="btn btn-default update" href="">Update</a>
-							<a class="btn btn-default check_out" href="{{route('frontend.testmail')}}">Check Out</a>
+							<a class="btn btn-default check_out" href="{{route('frontend.cart.order')}}">Check Out</a>
 					</div>
 				</div>
 			</div>
