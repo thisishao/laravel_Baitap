@@ -39,8 +39,11 @@ class CartController extends Controller
         }
 
         Session(['cart' => $cart]);
-
+        $count = count($cart);
         // print_r($cart);
+        return response()->json(['success'=>'Thêm vào giỏ hàng thành công.',
+                                'count'=> $count
+                                ]);
     }
 
 

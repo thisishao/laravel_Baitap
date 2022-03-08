@@ -47,7 +47,7 @@ function(){
     Route::get('/cart', 'CartController@show')->name('frontend.cart');
     Route::post('/cart', 'CartController@update')->name('frontend.cart.update');
     Route::get('/order', 'MailController@order')->name('frontend.cart.order');
-    Route::POST('/order', 'MailController@store')->name('frontend.cart.store');
+    Route::POST('/order', 'MailController@sendMail')->name('frontend.cart.store');
     
     Route::get('/send-mail', 'MailController@sendMail')->name('frontend.testmail');
     Route::get('/order-succes', 'MailController@done')->name('frontend.mail.done');

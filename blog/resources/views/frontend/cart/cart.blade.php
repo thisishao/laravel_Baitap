@@ -12,7 +12,9 @@
 				  <li class="active">Shopping Cart</li>
 				</ol>
 			</div>
+			@if(isset($cart))
 			<div class="table-responsive cart_info">
+				
 				<table class="table table-condensed">
 					<thead>
 						<tr class="cart_menu">
@@ -24,8 +26,7 @@
 							<td></td>
 						</tr>
 					</thead>
-					<tbody>
-						@if(isset($cart))
+					<tbody>	
 						@foreach($cart as $item)
 						<?php 
 							$getIm = json_decode($item['image'], true); 
@@ -60,15 +61,16 @@
 							</td>
 						</tr>
 						@endforeach
-						@else
-						<p>haha</p>
-						@endif
+
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</section> <!--/#cart_items-->
-
+	@else
+		<h2 style="color: red; text-align: center;" > You have not products in your shopping cart</h2>
+	@endif
+	@if(isset($cart))
 	<section id="do_action">
 		<div class="container">
 			<div class="heading">
@@ -139,12 +141,15 @@
 							<li>Total <span id="tong">{{$total}}</span><span>$</span></li>
 						</ul>
 							<a class="btn btn-default update" href="">Update</a>
+							
 							<a class="btn btn-default check_out" href="{{route('frontend.cart.order')}}">Check Out</a>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</section><!--/#do_action-->
+	@endif
 	@endsection('content')
 @section('js')
 	<script type="text/javascript">

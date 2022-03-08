@@ -21,55 +21,80 @@ class MailController extends Controller
         return view('frontend.cart.order', compact('cart', 'total'));
     }
 
-    public function store(MemberRequest $request){
+    // public function store(MemberRequest $request){
 
 
-        $cart = Session::get('cart');
-        $count = count($cart);
-        $total = 0;
+    //     $cart = Session::get('cart');
+    //     $count = count($cart);
+    //     $total = 0;
 
-        $data = $request->all();
-        $user = new MemberModel;
-        $user->name = $data['name'];
-        $user->email = $data['email'];
-        $user->password = bcrypt($data['password']);
-        $user->level = 0;
-        $user->save();
+    //     $data = $request->all();
+    //     $user = new MemberModel;
+    //     $user->name = $data['name'];
+    //     $user->email = $data['email'];
+    //     $user->password = bcrypt($data['password']);
+    //     $user->level = 0;
+    //     $user->save();
 
 
-        $login = [
-            'email'     => $request->email,
-            'password'  => $request->password,
-            'level'     => 0
-        ];
+    //     $login = [
+    //         'email'     => $request->email,
+    //         'password'  => $request->password,
+    //         'level'     => 0
+    //     ];
 
-        $remember = false;
+    //     $remember = false;
 
-        if (Auth::attempt($login, $remember)) {
+    //     if (Auth::attempt($login, $remember)) {
             
-            return redirect()->route('frontend.testmail');
-        }
+    //         return redirect()->route('frontend.testmail');
+    //     }
 
-    }
+    // }
 
-    public function sendMail()
+    public function sendMail(Request $request)
     {
-        $auth = Auth::user();
-        $cart = Session::get('cart');
-        $count = count($cart);
-        $total = 0;
 
-        Mail::send('frontend.sendMail.email', compact('cart','auth','count','total'), function($email) use($auth){
-            $email->subject('Đơn hàng đã sẵn sàng để giao đến quý khách');
-            $email->to($auth->email, $auth->name);
-        });
-        Session::forget('cart');
-        return redirect()->route('frontend.mail.done');
+        if (Auth::user()) {
+            return redirect()->route('frontend.mail.done');
+        }
+        // $data = $request->all();
+        // $user = new MemberModel;
+        // $user->name = $data['name'];
+        // $user->email = $data['email'];
+        // $user->password = bcrypt($data['password']);
+        // $user->level = 0;
+        // $user->save();
+
+        // $login = [
+        //     'email'     => $request->email,
+        //     'password'  => $request->password,
+        //     'level'     => 0
+        // ];
+
+        // $remember = false;
+
+        // if (Auth::attempt($login, $remember)) {       
+        //     $auth = Auth::user();
+        //     // dd($auth);
+        //     $cart = Session::get('cart');
+        //     // $count = count($cart);
+        //     $total = 0;
+
+        //     Mail::send('frontend.sendMail.email', compact('cart','auth','total'), function($email) use($auth){
+        //         $email->subject('Đơn hàng đã sẵn sàng để giao đến quý khách');
+        //         $email->to($auth->email, $auth->name);
+        //     });
+        //     Session::forget('cart');
+        //     return redirect()->route('frontend.mail.done');
+        // }
+
+
     }
 
     public function done()
     {
 
-        return view('frontend.sendMail.thanhcong');
+        return view('frontend.sendMail.done');
     }
 }

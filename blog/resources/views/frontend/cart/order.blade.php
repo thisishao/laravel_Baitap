@@ -25,11 +25,11 @@
                                 </ul>
                             </div>
                         @endif
-						<form action="#" method="POST">
+						<form action="" method="POST">
 							<input type="text" placeholder="Name" name="name" />
 							<input type="email" placeholder="Email Address" name="email" />
 							<input type="password" placeholder="Password" name="password" />
-							<button type="submit" class="btn btn-default">Register</button>
+							<button type="submit" class="btn btn-default">Continue</button>
 							@csrf
 						</form>
 						<span>Bạn đã có tài khoản

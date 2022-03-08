@@ -76,7 +76,9 @@ class BlogController extends Controller
         $blog = BlogModel::find($id);
         // $blog = BlogModel::all();
 
-        return response()->json($blog);
+        return response()->json([
+            'blog' => $blog
+        ]);
 
         // return $blog;
     }

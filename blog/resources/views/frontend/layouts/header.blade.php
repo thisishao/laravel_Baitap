@@ -66,7 +66,12 @@
 								<li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
 								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="{{route('frontend.cart')}}"><i class="fa fa-shopping-cart"></i>
-								Cart</a></li>
+								<span id="cart">
+									@if(isset($cart))
+										<p>ssss</p>
+									@else
+									@endif
+								</span></a></li>
 								@guest
 								<li><a href="{{route('frontend.login')}}"><i class="fa fa-lock"></i> Login</a></li>
 								<li><a href="{{route('frontend.register')}}"><i class="fa fa-lock"></i> Signup</a></li>

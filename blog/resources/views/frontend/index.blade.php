@@ -37,7 +37,6 @@
 						@endforeach
 						
 					</div><!--features_items-->
-					
 					<div class="category-tab"><!--category-tab-->
 						<div class="col-sm-12">
 							<ul class="nav nav-tabs">
@@ -438,7 +437,9 @@
 							  			_token: '{{csrf_token()}}'
 							        },
 							        success : function(response){
-							          console.log(response);
+							          // console.log(response);
+							          alert(response.success);
+							          // $('#cart').attr(response.cart);
 							        }
 							    });
 

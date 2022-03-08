@@ -213,9 +213,10 @@
 
 					$('.ratings_stars').click(function(){
 						var Values =  $(this).find("input").val();
+						var loggedIn = "{{Auth::check()}}";
 
 						// $('#formRate').submit();
-						if (getUser_id == undefined) {
+						if (loggedIn == "") {
 							var dn = confirm("Vui lòng đă nhập để đánh giá !!!")
 							if (dn == true) {
 								location.replace("http://localhost:8000/user/login");
