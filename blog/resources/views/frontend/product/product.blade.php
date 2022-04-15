@@ -69,7 +69,8 @@
 									<td>Id</td>
 									<td>Name</td>
 									<td>Image</td>
-									<td>Price</td>
+									<td>Price</td>								
+									<td>Actived</td>
 									<td>Action</td>
 								</tr>
 								@if(count($product) == 0)
@@ -83,6 +84,13 @@
 											<td><img src="{{asset('/upload/product/'.$pro->user_id.'/hinhnho_'.reset($getIm))}}"></td>
 											<td>{{$pro->price}}</td>
 											<td>
+												@if($pro->active == 0)
+													<div style="width: 10rem" class="alert alert-success">Active</div>	
+												@else
+													<div style="width: 10rem" class="alert alert-danger" >No Active</div>
+												@endif
+											</td>
+											<td>							
 												<a href="{{route('frontend.product.edit',['id'=>$pro->id])}}">Edit</a> |
 												<a href="{{route('frontend.product.destroy',['id'=>$pro->id])}}">Delete</a>
 											</td>

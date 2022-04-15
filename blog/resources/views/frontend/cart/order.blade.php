@@ -95,7 +95,9 @@
 							<li>Shipping Cost <span>Free</span></li>
 							<li>Total <span id="tong">{{$total}}</span><span>$</span></li>
 						</ul>
+							@if(Auth::check())
 							<a class="btn btn-default check_out" href="{{route('frontend.testmail')}}" style="float: right;">Order</a>
+							@endif
 					</div>
 				</div>
 			</div>

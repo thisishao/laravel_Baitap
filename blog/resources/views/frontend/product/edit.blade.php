@@ -85,6 +85,10 @@
 										{{$br->name}}</option>
 									@endforeach
 								</select>
+								<select class="checkActive" name="active" >
+									<option value="0">Active</option>
+									<option value="1" {{$getProducts['active'] == 1 ? 'selected':''}} >No active</option>
+								</select>
 								<select class="checkNew" name="new" onchange="check(this)">
 									<option value="0">New</option>
 									<option value="1" {{$getProducts['new'] == 1 ? 'selected':''}} >Sale</option>

@@ -66,11 +66,7 @@
 								<li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
 								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="{{route('frontend.cart')}}"><i class="fa fa-shopping-cart"></i>
-								<span id="cart">
-									@if(isset($cart))
-										<p>ssss</p>
-									@else
-									@endif
+								<span id="cart">Cart
 								</span></a></li>
 								@guest
 								<li><a href="{{route('frontend.login')}}"><i class="fa fa-lock"></i> Login</a></li>
@@ -122,7 +118,15 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="search_box pull-right">
-							<input type="text" placeholder="Search"/>
+							<div class="search_box pull-right">
+								<form style="position: relative;" action="{{ url('/search') }}" method="GET">
+									@csrf
+									<input type="text" name="search_content" placeholder="Search"/>
+									<button type="submit" class="btn btn-default search">Search      
+									</button>
+								</form>
+								
+							</div>
 						</div>
 					</div>
 				</div>

@@ -60,7 +60,7 @@ class MemberController extends Controller
             $user->level = 0;
             $user->save();
         }
-        return redirect()->route('frontend.blog');
+        return redirect()->route('home');
     }
 
     /**
@@ -149,7 +149,7 @@ class MemberController extends Controller
         }
 
         if (Auth::attempt($login, $remember)) {
-            return redirect()->route('frontend.blog');
+            return redirect()->route('home');
         }else{
             return redirect()->back()->withErrors('Email or password is not correct');
         }

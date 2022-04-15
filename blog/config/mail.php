@@ -40,7 +40,7 @@ return [
             'port' => 587,
             'encryption' => 'tls',
             'username' => 'thisishao98@gmail.com',
-            'password' => 'ijaonqkmgmhdsstl',
+            'password' => 'wyygwbsqubwjxiwj',
             'timeout' => null,
             'auth_mode' => null,
         ],

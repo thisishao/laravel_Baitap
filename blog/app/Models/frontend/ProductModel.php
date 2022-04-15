@@ -12,7 +12,7 @@ class ProductModel extends Model
     protected $table = 'product';
     protected $fillable = 
     [
-        'name','price','category_id','brand_id','new','sale','company','image','detail'
+        'name','price','user_id','category_id','brand_id','new','sale','active','company','image','detail'
     ];
 
     public function cat()
@@ -23,5 +23,10 @@ class ProductModel extends Model
     public function brand()
     {
         return $this->hasOne(Brand::class,'id','brand_id');
+    }
+
+    public static function scopeSearch($query, $searchTerm)
+    {
+        return $query->where('name', 'like', '%' .$searchTerm. '%');
     }
 }

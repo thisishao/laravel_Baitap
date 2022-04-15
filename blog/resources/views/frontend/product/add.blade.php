@@ -80,6 +80,10 @@
 									<option value="{{$br->id}}">{{$br->name}}</option>
 									@endforeach
 								</select>
+								<select name="active">
+									<option value="0">Actived</option>
+									<option value="1">No Actived</option>
+								</select>
 								<select name="new" onchange="check(this)">
 									<option value="0">New</option>
 									<option value="1">Sale</option>

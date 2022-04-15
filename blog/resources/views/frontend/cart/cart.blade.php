@@ -99,13 +99,7 @@
 								<label>Country:</label>
 								<select>
 									<option>United States</option>
-									<option>Bangladesh</option>
-									<option>UK</option>
-									<option>India</option>
-									<option>Pakistan</option>
-									<option>Ucrane</option>
-									<option>Canada</option>
-									<option>Dubai</option>
+				
 								</select>
 								
 							</li>
@@ -113,13 +107,7 @@
 								<label>Region / State:</label>
 								<select>
 									<option>Select</option>
-									<option>Dhaka</option>
-									<option>London</option>
-									<option>Dillih</option>
-									<option>Lahore</option>
-									<option>Alaska</option>
-									<option>Canada</option>
-									<option>Dubai</option>
+		
 								</select>
 							
 							</li>

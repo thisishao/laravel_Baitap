@@ -21,12 +21,7 @@ class ProductController extends Controller
         $id = Auth::id();
         $product = ProductModel::where('user_id',$id)->get();
 
-        foreach ($product as $value) {
-            $getIm[] = json_decode($value['image'], true);
-        }
-
-        // dd($product);
-        return view('frontend.product.product', compact('product','getIm'));
+        return view('frontend.product.product', compact('product'));
     }
 
 
@@ -41,13 +36,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
 
-        // kiem tra xem duong dan co ton tai hay kh?
-        // neu kh ton tai thi tao 
-        // neu ton tai thif up loadfile
-        //tao file vs dinh dang hinhnho_ngaythangnam_tenfile
-        //sua lai layout
 
-        // dd($request->all());
         $idUser = Auth::id();
 
         date_default_timezone_set('Asia/Ho_Chi_Minh');
@@ -99,6 +88,7 @@ class ProductController extends Controller
                     $news->category_id = $request->category;
                     $news->brand_id    = $request->brand;
 
+                    $news->active = $request->active;
                     if ($request->new == 1) {
                         $news->new = 1;
 
@@ -212,7 +202,7 @@ class ProductController extends Controller
         $news->user_id  = $idUser;
         $news->category_id = $request->category;
         $news->brand_id    = $request->brand;
-
+        $news->active = $request->active;
         if ($request->new == 1) {
             $news->new = 1;
 
@@ -261,6 +251,19 @@ class ProductController extends Controller
         return view('frontend.product.details', compact('product','getArrImage','image'));
     }
 
+
+    public function productBrand($id)
+    {
+        $getAllProduct = ProductModel::where('brand_id',$id)->where('active', 0)->get()->toArray();
+        return view('frontend.product.brand',compact('getAllProduct'));  
+    }
+
+
+    public function productCategory($id)
+    {
+        $getAllProduct = ProductModel::where('category_id',$id)->where('active', 0)->get()->toArray();
+        return view('frontend.product.category',compact('getAllProduct'));      
+    }
 
 
 }

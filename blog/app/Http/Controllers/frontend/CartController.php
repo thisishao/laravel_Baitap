@@ -41,9 +41,7 @@ class CartController extends Controller
         Session(['cart' => $cart]);
         $count = count($cart);
         // print_r($cart);
-        return response()->json(['success'=>'Thêm vào giỏ hàng thành công.',
-                                'count'=> $count
-                                ]);
+        return response()->json(['success'=>'Thêm vào giỏ hàng thành công.']);
     }
 
 
@@ -52,6 +50,7 @@ class CartController extends Controller
         $cart = Session::get('cart');
         // dd($cart);
         $total = 0;
+
         return view('frontend.cart.cart', compact('cart','total'));
     }
 

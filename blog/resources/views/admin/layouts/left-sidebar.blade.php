@@ -17,7 +17,7 @@
                             </a>
                         </li>
                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('admin.user')}}" aria-expanded="false">
                                 <i class="mdi mdi-view-list"></i>
                                 <span class="hide-menu">List Users</span>
                             </a>
@@ -41,7 +41,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('admin.product')}}"" aria-expanded="false">
                                 <i class="mdi mdi-cart"></i>
                                 <span class="hide-menu">List Product</span>
                             </a>

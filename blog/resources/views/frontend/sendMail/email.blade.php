@@ -37,15 +37,3 @@
 	</div>
 </div>
 
-<!-- cai cho checkout, thu tu lam nhu sau:
-- tao them 1 nut order , va thay cai form hien tai bang` form dk thanh vien, neu member chua login thi cho phep dk tai do' , va dk xong thi thuc hien gui mail, gui mail xong thi luu thong tin vao table history(de sau nay admin quan ly)
-- neu member dang o trang thai login thi k xuat hien tai form dk nua ma click order thi gui mail va luu history luon
-Vic
-chu k pai tach ra 2 nhu hien tai
-Vic
-va cai giao dien ben view: email.blade.php thi e phai co day du html nhu cai demo a gui kem` ay, e k gui html theo thi no k nhan css dc
-Vic
-Bao Vic
-doan nay e tao nut order, click cho order thi cho form dk submit bang js, neu dc thi e ke thua cai form dk ben register qua, k can tao lai
-
-8 người đắp xong đoạn đường trong 6 ngày  -->

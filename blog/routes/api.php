@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['namespace' => 'Api'], function () {
+    Route::get('/blog','BlogController@index');
+    Route::get('/blog/{id}','BlogController@single');
+
+
+    Route::group(['middleware' => 'auth:api',], function () {
+    
+    });
 });
+
+
